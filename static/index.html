@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#13222e">
+<title>AstroTwin: crew health copilot</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <div><h1>AstroTwin</h1><p class="sub">Crew health copilot for a 120-day Mars transit. Simulated data.</p></div>
+  <div class="status" aria-live="polite"><span>Mission day <b id="dayLbl">0</b></span><span id="link">Link</span><span id="net">Online</span><button id="install" class="ghost" type="button" hidden>Install app</button></div>
+</header>
+<main>
+  <section aria-label="Crew mission strip">
+    <h2>Crew status across the mission</h2>
+    <canvas id="strip" height="170" role="img" aria-label="Heatmap of each crew member's overall status by mission day. Click to select a person and day."></canvas>
+    <div class="strip-ctl">
+      <button id="play" type="button">Play mission</button>
+      <input id="slider" type="range" min="0" max="119" value="30" aria-label="Mission day">
+    </div>
+    <p class="note">Teal is within personal baseline, amber is watch, red is act now. Grey is the first 14 days of baseline learning.</p>
+  </section>
+  <div class="grid">
+    <div class="col">
+      <section aria-label="Crew overview"><h2>Crew overview</h2><div id="overview"></div></section>
+      <section aria-label="Selected astronaut">
+        <div class="row"><h2 id="who">Crew member</h2></div>
+        <div class="ready"><svg width="92" height="92" viewBox="0 0 92 92" aria-hidden="true"><circle cx="46" cy="46" r="38" fill="none" stroke="#2d4659" stroke-width="9"/><circle id="ring" cx="46" cy="46" r="38" fill="none" stroke="#4aa89c" stroke-width="9" stroke-linecap="round" transform="rotate(-90 46 46)" stroke-dasharray="0 239"/></svg>
+          <div><div class="big" id="readyNum">-</div><div class="note" id="readyTxt">Readiness</div></div></div>
+        <div id="domains"></div>
+      </section>
+    </div>
+    <div class="col">
+      <section aria-label="Trend">
+        <div class="row"><h2>Trend against personal baseline</h2><select id="metric" aria-label="Metric"></select></div>
+        <canvas id="trend" height="220" role="img" aria-label="Line chart of the selected metric with the personal baseline band"></canvas>
+      </section>
+      <section aria-label="Earth link"><h2>Earth link queue</h2><p class="note" id="linkNote"></p><ul class="q" id="queue"></ul></section>
+      <section aria-label="Tools"><h2>Tools</h2>
+        <div class="tools"><button id="checkin" type="button">Daily check-in</button><button id="importBtn" type="button" class="ghost">Import wearable CSV</button><button id="report" type="button" class="ghost">Export report</button></div>
+        <label class="tog" style="margin-top:12px"><input type="checkbox" id="share" checked><span>Share behavioral details with ground. When off, Earth sees the level only.</span></label>
+      </section>
+    </div>
+  </div>
+</main>
+<dialog id="dlg">
+  <h2>Daily check-in</h2><p class="note">About a minute. Decision support, not a diagnosis. Works offline for red-flag screening.</p>
+  <div class="checks" id="checks"></div>
+  <label>Mood today <select id="mood"><option value="">Skip</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+  <div id="rtbox" tabindex="0" role="button" aria-label="Reaction test">Start reaction test</div>
+  <div id="result" aria-live="polite"></div>
+  <div class="row" style="margin-top:12px"><button id="send" type="button">Check my status</button><button id="close" type="button" class="ghost">Close</button></div>
+</dialog>
+<dialog id="imp">
+  <h2>Import wearable data</h2>
+  <p class="note">CSV with one row per day. Recognised columns: resting_hr, hrv_rmssd, sleep_hours, skin_temperature, spo2, active_minutes (also rhr, hrv, sleep_h, skin_temp, exercise_min, reaction_ms, mood). At least 15 days. The first 14 learn your baseline. Data stays in your browser session and server memory only.</p>
+  <label>Name <input type="text" id="impName" value="You" maxlength="40"></label>
+  <p><input type="file" id="impFile" accept=".csv,text/csv" aria-label="CSV file"></p>
+  <p class="note"><a href="/sample_wearable.csv" download style="color:var(--ok)">Download a sample CSV</a></p>
+  <div id="impMsg" aria-live="polite"></div>
+  <div class="row"><button id="impGo" type="button">Import</button><button id="impClose" type="button" class="ghost">Close</button></div>
+</dialog>
+<div id="toast" role="status"></div>
+<script src="/app.js"></script>
+</body>
+</html>

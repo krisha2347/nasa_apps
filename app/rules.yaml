@@ -1,0 +1,58 @@
+# Domain definitions and ILLUSTRATIVE action protocols.
+# In a real deployment every action below must be replaced by flight-surgeon-approved procedures.
+domains:
+  immune:
+    label: Immune and infection
+    metrics: [skin_temp, rhr, hrv, spo2]
+    anchor_metrics: [skin_temp, spo2]   # an infection signature needs a temperature or SpO2 shift
+    drift_metrics: [skin_temp, spo2]
+    actions:
+      amber:
+        - Re-check temperature and SpO2 in 4 hours and log any symptoms.
+        - Increase fluids and keep a 7-8 hour sleep window.
+        - Wipe shared surfaces and limit close contact in the cabin.
+      red:
+        - Start the infection triage checklist and isolate in a low-traffic module if possible.
+        - Notify the crew medical officer now.
+        - Queue a priority message to the flight surgeon.
+  behavioral:
+    label: Behavioral health
+    metrics: [mood, sleep_h, reaction_ms]
+    drift_metrics: [mood, sleep_h, reaction_ms]
+    actions:
+      amber:
+        - Protect an 8-hour sleep window tonight and defer non-critical tasks.
+        - Schedule a call with a crew member or family and a short guided relaxation.
+      red:
+        - Hand off safety-critical tasks until rested.
+        - Request a private conference with the ground flight psychologist.
+  gravity:
+    label: Bone, muscle and heart
+    metrics: [exercise_min, rhr, hrv]
+    drift_metrics: [exercise_min, rhr, hrv]
+    actions:
+      amber:
+        - Complete the full resistive plus aerobic exercise block for the next 3 days.
+        - Check exercise equipment loads and log them.
+      red:
+        - Request a ground consult to adjust the exercise prescription.
+        - Add a cardiovascular check-in to tomorrow's routine.
+  environment:
+    label: Cabin air
+    metrics: [co2_ppm]
+    drift_metrics: [co2_ppm]
+    actions:
+      amber:
+        - Check the CO2 scrubber and ventilation flow, and move to a lower-CO2 module.
+      red:
+        - Follow the cabin air checklist and alert the crew and ground.
+  radiation:
+    label: Radiation
+    metrics: []
+    drift_metrics: []
+    actions:
+      amber:
+        - Log exposure time and review the dose budget against the mission plan.
+      red:
+        - Move to the designated shielded shelter area and follow the storm procedure.
+        - Alert the crew and ground, and log dose until the event ends.
