@@ -1,0 +1,157 @@
+{
+  "disclaimer": "Illustrative reference ranges for a healthy adult. Decision support only, not a diagnosis. In a real mission every range and action must be replaced by flight-surgeon-approved procedures.",
+  "environments": {
+    "spacecraft": {
+      "label": "Spacecraft (deep-space transit)",
+      "comms": "Earth contact is delayed by many minutes each way and may drop out. Decide and act first, then queue a message to the ground.",
+      "equipment": "Limited kit: wearable, pulse oximeter, thermometer, small cuff. Keep measurements short and share the kit.",
+      "every_hours": {"heart_rate": 24, "temperature": 24, "spo2": 24, "blood_pressure": 48, "sleep": 24, "mood": 24}
+    },
+    "station": {
+      "label": "Space station (low Earth orbit)",
+      "comms": "Ground contact is frequent but not constant. Report abnormal readings at the next pass, or immediately if red.",
+      "equipment": "Fuller medical kit and a shared exercise area. Take readings before exercise unless the guide says otherwise.",
+      "every_hours": {"heart_rate": 24, "temperature": 24, "spo2": 24, "blood_pressure": 24, "sleep": 24, "mood": 24}
+    },
+    "moon_base": {
+      "label": "Lunar surface base",
+      "comms": "Earth is about 1.3 seconds away by radio, so near real-time talk with the ground is possible when the link is up.",
+      "equipment": "Habitat kit plus suit sensors. Take an extra set after any surface walk (EVA), and note lunar dust exposure.",
+      "every_hours": {"heart_rate": 12, "temperature": 24, "spo2": 12, "blood_pressure": 24, "sleep": 24, "mood": 24}
+    }
+  },
+  "measurements": [
+    {
+      "id": "heart_rate",
+      "name": "Resting heart rate",
+      "fields": [
+        {"id": "bpm", "label": "Heart rate", "unit": "bpm", "min": 20, "max": 240,
+         "bands": [
+           {"max": 40, "level": "red", "text": "Very slow. If you feel faint or dizzy, treat as urgent."},
+           {"max": 50, "level": "amber", "text": "Slower than usual. Re-check after 5 minutes of rest."},
+           {"max": 101, "level": "green", "text": "Within the usual resting range."},
+           {"max": 120, "level": "amber", "text": "Elevated at rest. Re-check after 5 minutes; look for fever, dehydration or stress."},
+           {"level": "red", "text": "Very fast at rest. If you also have chest pain, dizziness or breathlessness, treat as urgent."}
+         ]}
+      ],
+      "how": [
+        "Sit or float still and relaxed for 5 minutes. Do not measure right after exercise.",
+        "Put the wearable snugly on your wrist, or place two fingers on the inside of your wrist.",
+        "Count beats for 30 seconds and double it, or read the wearable after it settles.",
+        "Enter the number below."
+      ],
+      "why": "Heart rate drifts with fluid shifts, deconditioning, infection, stress and poor sleep, and it is one of the earliest signals of change.",
+      "if_abnormal": ["Rest 5 minutes and measure again.", "Check temperature and SpO2 as well.", "Drink fluids and log any symptoms.", "If it stays outside the range or you have symptoms, tell the crew medical officer and queue a message to the ground."]
+    },
+    {
+      "id": "temperature",
+      "name": "Body temperature",
+      "fields": [
+        {"id": "c", "label": "Temperature", "unit": "°C", "min": 30, "max": 43, "step": 0.1,
+         "bands": [
+           {"max": 35, "level": "red", "text": "Low. Warm up and tell the crew medical officer."},
+           {"max": 36, "level": "amber", "text": "A little low. Re-check in 30 minutes."},
+           {"max": 37.5, "level": "green", "text": "Within the usual range."},
+           {"max": 38, "level": "amber", "text": "Slightly raised. Re-check in 4 hours and log symptoms."},
+           {"level": "red", "text": "Fever. Follow the infection checklist and notify the crew medical officer."}
+         ]}
+      ],
+      "how": [
+        "Wait 15 minutes after exercise, a hot drink or a shower.",
+        "Use the thermometer as its instructions say (oral, ear or forehead) and use the same method each time.",
+        "Wait for the beep and read the value.",
+        "Enter the number below."
+      ],
+      "why": "A temperature rise is a key sign of infection, and immune function can change in spaceflight. Using the same method every day makes trends meaningful.",
+      "if_abnormal": ["Re-check in 30 minutes using the same method.", "Check SpO2 and heart rate.", "Increase fluids, rest, and limit close contact with the crew.", "Start the infection checklist and notify the crew medical officer if it is 38 °C or higher."]
+    },
+    {
+      "id": "spo2",
+      "name": "Blood oxygen (SpO2)",
+      "fields": [
+        {"id": "pct", "label": "SpO2", "unit": "%", "min": 50, "max": 100,
+         "bands": [
+           {"max": 90, "level": "red", "text": "Low. Check the sensor, then treat as urgent: breathe slowly, check cabin air and alert the crew."},
+           {"max": 95, "level": "amber", "text": "Slightly low. Re-check with warm hands and a still finger."},
+           {"level": "green", "text": "Within the usual range."}
+         ]}
+      ],
+      "how": [
+        "Warm your hands first. Cold fingers give false low readings.",
+        "Remove nail polish and clip the sensor on a still fingertip.",
+        "Keep your hand still for 30 seconds until the number settles.",
+        "Enter the steady value below."
+      ],
+      "why": "Low oxygen can mean illness or a cabin air problem. Together with temperature it helps tell an infection from other causes.",
+      "if_abnormal": ["Warm the hand and repeat on another finger.", "Check cabin air alarms and CO2 levels.", "If it stays low or you are short of breath, alert the crew now and notify the ground."]
+    },
+    {
+      "id": "blood_pressure",
+      "name": "Blood pressure",
+      "fields": [
+        {"id": "sys", "label": "Systolic (top number)", "unit": "mmHg", "min": 40, "max": 260,
+         "bands": [
+           {"max": 80, "level": "red", "text": "Very low. Lie back, raise legs if possible and tell the crew medical officer."},
+           {"max": 90, "level": "amber", "text": "Low. Re-check after resting for 5 minutes."},
+           {"max": 130, "level": "green", "text": "Within the usual range."},
+           {"max": 160, "level": "amber", "text": "Raised. Rest 5 minutes and re-check."},
+           {"level": "red", "text": "Very high. Re-check; if confirmed or you have a severe headache or chest pain, treat as urgent."}
+         ]},
+        {"id": "dia", "label": "Diastolic (bottom number)", "unit": "mmHg", "min": 20, "max": 160,
+         "bands": [
+           {"max": 50, "level": "red", "text": "Very low. Tell the crew medical officer."},
+           {"max": 60, "level": "amber", "text": "Low. Re-check after resting."},
+           {"max": 85, "level": "green", "text": "Within the usual range."},
+           {"max": 100, "level": "amber", "text": "Raised. Rest and re-check."},
+           {"level": "red", "text": "Very high. Re-check and tell the crew medical officer."}
+         ]}
+      ],
+      "how": [
+        "Rest for 5 minutes. No caffeine or exercise in the last 30 minutes.",
+        "Fit the cuff snugly on the upper arm at heart level.",
+        "Stay still and do not talk while it inflates.",
+        "Enter both numbers below."
+      ],
+      "why": "Fluid shifts in microgravity and changes in heart fitness can move blood pressure, and symptoms like dizziness on standing or landing can follow.",
+      "if_abnormal": ["Rest and repeat after 5 minutes.", "Hydrate.", "If a high value is confirmed or you have a severe headache, vision change or chest pain, treat as urgent and notify the ground."]
+    },
+    {
+      "id": "sleep",
+      "name": "Sleep",
+      "fields": [
+        {"id": "hours", "label": "Hours slept last night", "unit": "h", "min": 0, "max": 16, "step": 0.1,
+         "bands": [
+           {"max": 4, "level": "red", "text": "Very little sleep. Hand off safety-critical tasks until rested."},
+           {"max": 6, "level": "amber", "text": "Short sleep. Protect an 8-hour window tonight."},
+           {"max": 10, "level": "green", "text": "Within the usual range."},
+           {"level": "amber", "text": "Long sleep. Note it and watch for other signs of illness or low mood."}
+         ]}
+      ],
+      "how": [
+        "Use your wearable's sleep total, or estimate from lights-out to wake-up.",
+        "Do not count time spent awake in your sleep station.",
+        "Enter the hours below."
+      ],
+      "why": "Sleep loss affects mood, reaction time and immunity, and spaceflight sleep is often disrupted by light, noise and schedule shifts.",
+      "if_abnormal": ["Protect an 8-hour sleep window tonight and cut caffeine late in the day.", "Reduce bright light before sleep.", "If poor sleep lasts several nights, tell the crew medical officer and ask the ground for support."]
+    },
+    {
+      "id": "mood",
+      "name": "Mood",
+      "fields": [
+        {"id": "score", "label": "Mood today (1 very low, 5 very good)", "unit": "/5", "min": 1, "max": 5, "step": 1,
+         "bands": [
+           {"max": 3, "level": "amber", "text": "Low mood. Talk to a crewmate or family and plan something restorative today."},
+           {"level": "green", "text": "Within the usual range."}
+         ]}
+      ],
+      "how": [
+        "Pause for a moment and think about how you have felt today overall.",
+        "Pick a number from 1 (very low) to 5 (very good).",
+        "Enter it below. Compare with your own usual level rather than a target."
+      ],
+      "why": "Isolation, confinement and workload affect mood, and early low mood is easy to miss without a regular check.",
+      "if_abnormal": ["Talk to a crewmate you trust.", "Schedule a call with family or a friend, and a short relaxation exercise.", "If low mood lasts several days, or you have thoughts of harming yourself, tell a crewmate or the ground flight psychologist right away."]
+    }
+  ]
+}
