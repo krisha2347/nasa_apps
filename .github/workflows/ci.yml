@@ -9,4 +9,4 @@ jobs:
         with: {python-version: "3.12"}
       - run: pip install -r requirements-dev.txt
       - run: python -m pytest -q
-      - run: node --check static/app.js && node --check static/sw.js
+      - run: node --check static/app.js && node --check static/chat.js && node --check static/sw.js

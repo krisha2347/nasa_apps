@@ -1,0 +1,201 @@
+{
+  "intro": "I will ask eleven quick yes or no questions about how you feel, then take one blood-pressure reading, and tell you what to do next. This is decision support, not a diagnosis.",
+  "disclaimer": "Illustrative triage logic for a demo. It is not a diagnosis and not a substitute for flight-surgeon-approved procedures.",
+  "headlines": {
+    "red": "Act now. Treat this as urgent.",
+    "amber": "Watch. Re-check and monitor.",
+    "green": "Nominal. No red flags."
+  },
+  "level_instructions": {
+    "red": [
+      "Stop safety-critical work and sit or lie down somewhere safe.",
+      "Tell the crew medical officer now and start the emergency checklist.",
+      "Queue a priority message to the flight surgeon with these answers and readings."
+    ],
+    "amber": [
+      "Rest, hydrate, and avoid heavy exercise until this settles.",
+      "Log how you feel and re-check in about 4 hours.",
+      "Tell the crew medical officer if it gets worse or does not settle."
+    ],
+    "green": [
+      "No red flags from these answers and readings. Keep your normal routine.",
+      "Measure again at your next scheduled time, or sooner if something changes."
+    ]
+  },
+  "recheck": {
+    "red": "Do not wait for a re-check. Do the urgent steps first and re-measure only when the crew medical officer asks.",
+    "amber": "Re-check blood pressure and pulse in 4 hours, or after 5 minutes of rest if a reading was raised.",
+    "green": "Re-check at your next scheduled measurement, about 24 hours from now."
+  },
+  "reading_prompt": "Now take one blood-pressure reading with the cuff. Rest for 5 minutes, put the cuff on the upper arm at heart level and stay still. Enter the systolic, diastolic and pulse numbers, or press No cuff if you do not have one.",
+  "no_cuff": "No cuff available, answering from symptoms only.",
+  "questions": [
+    {
+      "id": "chest_pain",
+      "text": "Do you feel a sharp pain in your chest right now?",
+      "level": "red",
+      "finding": "Sharp pain in your chest",
+      "instructions": [
+        "Stop what you are doing and sit down. Do not start or continue exercise.",
+        "If the pain is heavy or crushing, spreads to your arm, jaw or back, or comes with sweating, say so when you report, and get a 12-lead ECG if the kit has one.",
+        "Stay with another crew member until the crew medical officer has seen you."
+      ],
+      "followup": {
+        "text": "Is the pain worse when you take a deep breath, or when you press on your chest?",
+        "yes": "Pain that changes with breathing or pressing is often muscular, but it stays on the urgent list until it has been checked.",
+        "no": "Constant pain that does not change with breathing is treated as more concerning. Point this out when you report."
+      }
+    },
+    {
+      "id": "breathless",
+      "text": "Are you short of breath, or breathing faster than usual while sitting still?",
+      "level": "red",
+      "finding": "Shortness of breath at rest",
+      "instructions": [
+        "Sit upright, loosen anything tight and breathe slowly and deeply.",
+        "Check the cabin air and CO2 alarms, and sit near a vent if the air feels stale.",
+        "If speaking a full sentence is hard, treat it as an emergency and call the crew medical officer."
+      ]
+    },
+    {
+      "id": "fainting",
+      "text": "Do you feel faint, or have you fainted or nearly fainted today?",
+      "level": "red",
+      "finding": "Fainting or near-fainting",
+      "instructions": [
+        "Sit or lie down now and raise your legs above heart level.",
+        "Do not stand up quickly, and ask a crewmate to stay with you.",
+        "If someone cannot be woken or is confused, start the emergency response."
+      ]
+    },
+    {
+      "id": "vision_change",
+      "text": "Has your vision changed suddenly, with blurring, loss of part of your view, or new flashes?",
+      "level": "red",
+      "finding": "Sudden vision change",
+      "instructions": [
+        "Stop tasks that need fine vision and rest your eyes.",
+        "Report it at once: a sudden change can be a sign of pressure or circulation problems.",
+        "Do not operate equipment until it has been checked."
+      ]
+    },
+    {
+      "id": "severe_headache",
+      "text": "Do you have a severe or unusual headache right now?",
+      "level": "red",
+      "finding": "Severe or unusual headache",
+      "instructions": [
+        "Rest in a dim, quiet place and drink water.",
+        "Report it now, especially with a stiff neck, fever or vision change.",
+        "Note whether this is the worst headache you have had, and say so when you report."
+      ]
+    },
+    {
+      "id": "palpitations",
+      "text": "Is your heart racing, pounding or skipping beats while you are resting?",
+      "level": "amber",
+      "finding": "Palpitations at rest",
+      "instructions": [
+        "Sit down, breathe slowly and re-check your pulse after 5 minutes of rest.",
+        "Avoid exercise, caffeine and nicotine until it settles.",
+        "If it lasts more than 15 minutes, or you feel faint or breathless, treat it as urgent."
+      ]
+    },
+    {
+      "id": "fever",
+      "text": "Do you feel feverish, or have you had chills?",
+      "level": "amber",
+      "finding": "Fever or chills",
+      "instructions": [
+        "Take your temperature and re-check it in 4 hours.",
+        "Drink more fluids, rest, and limit close contact with the crew.",
+        "Start the infection checklist and notify the crew medical officer if it reaches 38 °C."
+      ]
+    },
+    {
+      "id": "cough",
+      "text": "Do you have a new cough, sore throat or congested nose?",
+      "level": "amber",
+      "finding": "Cough or sore throat",
+      "instructions": [
+        "Wear a mask near crewmates and wipe shared surfaces.",
+        "Keep fluids up and sleep a full 8 hours.",
+        "Report it if breathing becomes hard or the cough deepens."
+      ]
+    },
+    {
+      "id": "dizzy",
+      "text": "Do you feel dizzy or lightheaded, especially when you sit up or stand?",
+      "level": "amber",
+      "finding": "Dizziness or lightheadedness",
+      "instructions": [
+        "Sit or lie down and rise slowly for the next few hours.",
+        "Drink 500 ml of water if you can tolerate it, and eat something salty.",
+        "If you faint or your vision greys out, treat it as urgent."
+      ]
+    },
+    {
+      "id": "swelling",
+      "text": "Is there new swelling in your legs, ankles or face?",
+      "level": "amber",
+      "finding": "New swelling in the legs or face",
+      "instructions": [
+        "Note where the swelling is and whether it pits when pressed.",
+        "Reduce salt, keep moving gently, and do not sit still for long periods.",
+        "Report it, especially with breathlessness or a rapid change in weight."
+      ]
+    },
+    {
+      "id": "low_mood",
+      "text": "Have you felt low, anxious or unlike yourself today?",
+      "level": "amber",
+      "finding": "Low mood or anxiety",
+      "instructions": [
+        "Tell a crewmate you trust how you are feeling.",
+        "Protect an 8-hour sleep window and plan one restorative activity today.",
+        "Ask the ground flight psychologist for a private conference if this lasts more than a few days."
+      ]
+    }
+  ],
+  "combinations": [
+    {
+      "when": {"answers": ["dizzy"], "readings": {"sys_lt": 90, "dia_lt": 60}},
+      "level": "red",
+      "finding": "Dizziness with low blood pressure",
+      "instructions": [
+        "Lie down and raise your legs above heart level. Do not stand until you feel steady.",
+        "Drink 500 ml of water and ask a crewmate to stay with you.",
+        "Notify the crew medical officer and queue a priority message with these readings."
+      ],
+      "notes": [
+        "Low blood pressure together with dizziness can mean dehydration or a circulation problem, so this is treated as urgent."
+      ]
+    },
+    {
+      "when": {"answers": ["severe_headache"], "readings": {"sys_gt": 160, "dia_gt": 100}},
+      "level": "red",
+      "finding": "Severe headache with high blood pressure",
+      "instructions": [
+        "Sit quietly and re-check the cuff on the other arm after 5 minutes.",
+        "If it is still high, or you have vision change, chest pain or weakness, treat it as an emergency.",
+        "Notify the crew medical officer now. Do not take anything to lower it without advice."
+      ],
+      "notes": [
+        "A severe headache with very high blood pressure needs a person, not just a re-check."
+      ]
+    },
+    {
+      "when": {"answers": ["palpitations"], "readings": {"pulse_gt": 120}},
+      "level": "red",
+      "finding": "Palpitations with a fast pulse",
+      "instructions": [
+        "Sit or lie down, breathe slowly for 5 minutes and re-check the pulse.",
+        "If it stays above 120 at rest, or you feel faint or breathless, treat it as an emergency.",
+        "Notify the crew medical officer and queue a priority message."
+      ],
+      "notes": [
+        "A racing heart that stays fast at rest is treated as urgent rather than watched."
+      ]
+    }
+  ]
+}

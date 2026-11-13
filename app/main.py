@@ -5,9 +5,10 @@ from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import Dict, List, Literal, Optional
 
 from . import engine as E
+from . import triage_chat as T
 from .ingest import IngestError, from_csv
 from .report import build_report
 from .simulator import N_DAYS
@@ -66,6 +67,23 @@ class CheckIn(BaseModel):
 def checkin(body: CheckIn):
     _eng(body.crew_id)
     return E.triage(body.crew_id, body.symptoms, body.reaction_ms, body.mood)
+
+
+class SymptomChat(BaseModel):
+    crew_id: Optional[str] = None
+    answers: Dict[str, Literal["yes", "no", "unsure"]] = {}
+    readings: Dict[Literal["sys", "dia", "pulse"], float] = {}
+
+
+@app.post("/api/symptom-chat", summary="Guided symptom questions plus one cuff reading, turned into instructions")
+def symptom_chat(body: SymptomChat):
+    baseline = None
+    if body.crew_id:
+        baseline = _eng(body.crew_id).mean["rhr"]
+    try:
+        return T.evaluate(body.answers, body.readings, baseline)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
 
 
 class ImportBody(BaseModel):

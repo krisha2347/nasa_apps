@@ -26,6 +26,7 @@ All demo data is **simulated**. See [Limitations](#limitations-and-ethics).
 | Offline-first PWA | Installable; after one load the full dashboard, forecasts and screening work without a server |
 | Flight-surgeon report | One-click Markdown report with status, drivers, goals, 14-day table and queued messages |
 | Daily check-in | Symptom screening plus a 1-minute reaction-time test; red-flag symptoms always escalate |
+| Symptom chat | Guided yes/no questions ("sharp pain in your chest?") plus one blood-pressure reading, answered with plain instructions |
 
 ## Quick start
 
@@ -151,6 +152,7 @@ Interactive docs at `/docs`.
 | `GET /api/earth-queue?upto=D` | Queued messages |
 | `GET /api/crew/{id}/report?day=D` | Markdown report download |
 | `POST /api/checkin` | Symptom, mood and reaction triage |
+| `POST /api/symptom-chat` | Guided symptom answers plus cuff readings, turned into instructions (content in `static/triage.json`) |
 | `POST /api/import` | Add a wearable CSV as a crew member |
 
 ## Using your own data
@@ -163,7 +165,7 @@ CSV, one row per day, at least 15 rows (the first 14 learn the baseline). Recogn
 
 ```
 app/            simulator.py  engine.py  ingest.py  report.py  main.py  rules.yaml
-static/         index.html  app.js  style.css  sw.js  manifest.webmanifest  icon.svg  sample_wearable.csv
+static/         index.html  app.js  chat.js  style.css  sw.js  triage.json  guides.js  guides.json  manifest.webmanifest  icon.svg  sample_wearable.csv
 tests/          test_engine.py  test_api.py
 docs/           ARCHITECTURE.md  METHODOLOGY.md  PITCH.md
 .github/        workflows/ci.yml
@@ -174,7 +176,7 @@ Dockerfile  Makefile  run.sh  requirements*.txt  LICENSE
 
 `make test` runs the Python tests and a JavaScript syntax check. The tests cover detection of every injected event,
 zero false alarms in the quiet windows, cause attribution, forecast, recovery goals, the blackout queue, report,
-import validation, and that the PWA assets are served.
+import validation, symptom-chat escalation and combination rules, and that the PWA assets are served.
 
 ## Limitations and ethics
 

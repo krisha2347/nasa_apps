@@ -53,6 +53,7 @@ const cur = () => { const cd = B.crew[crew]; const di = Math.min(day, cd.n - 1);
 
 function render() {
   const {st, beyond} = cur();
+  document.body.dataset.crew = crew;
   $('#slider').value = day; $('#dayLbl').textContent = day;
   const bo = B.meta.blackout, down = day >= bo[0] && day <= bo[1];
   $('#link').innerHTML = down ? '<b class="red">Link down</b>' : `Link delay <b>${B.meta.link_delay[day]} min</b>`;
